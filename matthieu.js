@@ -1,6 +1,37 @@
+const speed_ini = 25;
+let speed = speed_ini;
+const canvasW = 800;
+const canvasH = 800;
+
+let joueur = {
+  'x' : 400, 'y' : 400, 'w' : 50, 'h' : 50
+};
+
+
+let sol = { //sol
+  'x1' : 0, 'x2' : canvasW, 'y1' : canvasH, 'y2' : canvasH, 'nature' : 'sol'
+}; 
+let obstacle_rect_1 ={ //rect
+  'x' : canvasW/2, 'y': canvasH-100, 'w':100, 'h': 100, 'nature' : 'rect'
+}
+let ensemble_collision = [sol,obstacle_rect_1];
+
+function collision(tab_murs,joueur){
+  let center_x = joueur.x + joueur.w/2;
+  let center_y = joueur.y + joueur.h/2;
+  tab_murs.forEach(element => {
+    if(element.nature==='sol' && center_y > element.y1-joueur.h/2){
+      joueur.y = element.y1 -joueur.h;
+    }
+    if(element.nature ==='rect'){
+      
+    }
+  });
+}
+
 function setup() {
   print('Hello World');
-  createCanvas(800,800);
+  createCanvas(canvasW,canvasH);
   
 }
 
@@ -8,15 +39,6 @@ function setup() {
 // {
 //   if(keyCode === UP_ARROW
 // }
-
-
-let joueur = {
-  'x' : 400, 'y' : 400, 'w' : 50, 'h' : 50
-};
-
-const speed_ini = 25;
-let speed = speed_ini;
-
 
 function draw() {
     
@@ -55,8 +77,8 @@ function draw() {
     speed = speed_ini;
     isPressed = false;
   }
+  collision(ensemble_collision,joueur);
   rect(joueur.x,joueur.y,joueur.w,joueur.h);
-  ellipse(25,25,25);
   frameRate(120);
   
 }
