@@ -24,7 +24,11 @@ function collision(tab_murs,joueur){
       joueur.y = element.y1 -joueur.h;
     }
     if(element.nature ==='rect'){
-      
+      if ((center_x + joueur.w/2 > element.x && center_x - joueur.w/2 < element.x + element.w)){
+        joueur.y = element.y - joueur.h;
+      } // revenir à une définition de 4 murs pour un obstacle. Traiter selon les murs horizontaux et verticaux. Pk pas une def globale pour les obliques aussi
+      // if (){
+      // }
     }
   });
 }
@@ -45,7 +49,7 @@ function draw() {
   
   background(255); //valeur entre 0 et 255, niveaux de gris
   fill(0,0,0);
-  let isPressed;
+  let isPressed = false;
   if(keyIsPressed === true){
     isPressed = true;
     if(keyIsDown(LEFT_ARROW)){
@@ -79,6 +83,11 @@ function draw() {
   }
   collision(ensemble_collision,joueur);
   rect(joueur.x,joueur.y,joueur.w,joueur.h);
+  ensemble_collision.forEach(element =>{
+    if(element.nature== 'rect'){
+      rect(element.x,element.y,element.w,element.h)
+    }
+  })
   frameRate(120);
   
 }
